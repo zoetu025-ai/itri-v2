@@ -11,3 +11,9 @@ export const Full = {
     variant: 'full',
   },
 };
+
+export const Source = {
+  args: {
+    variant: 'source',
+  },
+};

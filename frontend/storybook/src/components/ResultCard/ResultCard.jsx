@@ -21,6 +21,7 @@ export function ResultCard({
   onStepFileClick,
   onStepActionClick,
   onSourceSelect,
+  onSourceSnippetClick,
   className = '',
   cardRef,
 }) {
@@ -49,7 +50,12 @@ export function ResultCard({
         <AnswerContent onBadgeClick={() => onBadgeClick?.(id)} />
       ) : null}
       {activeTab === 'sources' ? (
-        <SourcesContent onSelect={(source) => onSourceSelect?.(id, source)} />
+        <SourcesContent
+          onSelect={(source) => onSourceSelect?.(id, source)}
+          onSnippetClick={(source, snippet, index) =>
+            onSourceSnippetClick?.(id, source, snippet, index)
+          }
+        />
       ) : null}
       {activeTab === 'steps' ? (
         <AssistantSteps

@@ -69,6 +69,8 @@ export function ResultPage({
   );
   const [filePreviewOpen, setFilePreviewOpen] = useState(false);
   const [filePreviewFullOpen, setFilePreviewFullOpen] = useState(false);
+  const [sourcePreviewOpen, setSourcePreviewOpen] = useState(false);
+  const [activeSnippetIndex, setActiveSnippetIndex] = useState(0);
   const [jsonPanelOpen, setJsonPanelOpen] = useState(
     controlledJsonPanel === true,
   );
@@ -135,6 +137,7 @@ export function ResultPage({
       setFileDetailOpen(false);
       setFilePreviewOpen(false);
       setFilePreviewFullOpen(false);
+      setSourcePreviewOpen(false);
       setJsonPanelOpen(false);
       setJsonFullOpen(false);
       setSelectedFile(null);
@@ -151,6 +154,7 @@ export function ResultPage({
       setFileDetailOpen(false);
       setFilePreviewOpen(false);
       setFilePreviewFullOpen(false);
+      setSourcePreviewOpen(false);
       setJsonPanelOpen(false);
       setJsonFullOpen(false);
       setSelectedFile(null);
@@ -164,6 +168,7 @@ export function ResultPage({
     setJsonPanelOpen(false);
     setJsonFullOpen(false);
     setFilePreviewFullOpen(false);
+    setSourcePreviewOpen(false);
     setFilePreviewOpen(true);
     onBadgeClick?.(cardId);
   };
@@ -175,6 +180,7 @@ export function ResultPage({
     setJsonPanelOpen(false);
     setJsonFullOpen(false);
     setFilePreviewFullOpen(false);
+    setSourcePreviewOpen(false);
     setFilePreviewOpen(true);
     onBadgeClick?.(cardId);
   };
@@ -185,6 +191,7 @@ export function ResultPage({
     setFileDetailOpen(false);
     setFilePreviewOpen(false);
     setFilePreviewFullOpen(false);
+    setSourcePreviewOpen(false);
     setJsonFullOpen(false);
     setJsonPanelOpen(true);
     onBadgeClick?.(cardId);
@@ -195,15 +202,30 @@ export function ResultPage({
     setSelectedFile(source);
     setFilePreviewOpen(false);
     setFilePreviewFullOpen(false);
+    setSourcePreviewOpen(false);
     setJsonPanelOpen(false);
     setJsonFullOpen(false);
     setFileDetailOpen(true);
     onBadgeClick?.(cardId);
   };
 
+  const handleSourceSnippetClick = (cardId, source, _snippet, index = 0) => {
+    if (controlledHistoryId === undefined) setInternalHistoryId(cardId);
+    setSelectedFile(source);
+    setActiveSnippetIndex(index);
+    setFileDetailOpen(false);
+    setFilePreviewOpen(false);
+    setFilePreviewFullOpen(false);
+    setJsonPanelOpen(false);
+    setJsonFullOpen(false);
+    setSourcePreviewOpen(true);
+    onBadgeClick?.(cardId);
+  };
+
   const handleFileInfoClick = () => {
     setFilePreviewOpen(false);
     setFilePreviewFullOpen(false);
+    setSourcePreviewOpen(false);
     setJsonPanelOpen(false);
     setJsonFullOpen(false);
     setFileDetailOpen(true);
@@ -217,6 +239,7 @@ export function ResultPage({
   const handleCloseFilePreview = () => {
     setFilePreviewOpen(false);
     setFilePreviewFullOpen(false);
+    setSourcePreviewOpen(false);
     setSelectedFile(null);
   };
 
@@ -305,6 +328,17 @@ export function ResultPage({
         />
       ) : null}
 
+      {sourcePreviewOpen ? (
+        <FilePreviewPanel
+          variant="source"
+          date={selectedFile?.date}
+          activeSnippetIndex={activeSnippetIndex}
+          onSnippetSelect={(index) => setActiveSnippetIndex(index)}
+          onInfo={handleFileInfoClick}
+          onClose={() => setSourcePreviewOpen(false)}
+        />
+      ) : null}
+
       <div className={styles.layout}>
         <aside className={styles.historyColumn}>
           <ChatHistory
@@ -328,6 +362,7 @@ export function ResultPage({
               onStepFileClick={handleStepFileClick}
               onStepActionClick={handleStepActionClick}
               onSourceSelect={handleSourceSelect}
+              onSourceSnippetClick={handleSourceSnippetClick}
               cardRef={(node) => {
                 cardRefs.current[item.id] = node;
               }}

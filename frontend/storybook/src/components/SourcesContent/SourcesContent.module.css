@@ -88,7 +88,11 @@
   width: 100%;
   min-height: 40px;
   padding: 10px 12px;
+  border: none;
   overflow: hidden;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
 }
 
 .rowOdd {
@@ -97,6 +101,11 @@
 
 .rowEven {
   background: var(--color-surface-primary);
+}
+
+.rowOdd:hover,
+.rowEven:hover {
+  filter: brightness(0.98);
 }
 
 .snippetText {

@@ -85,7 +85,12 @@ function SnippetText({ parts }) {
   );
 }
 
-export function SourcesContent({ sources = DEFAULT_SOURCES, onSelect, className = '' }) {
+export function SourcesContent({
+  sources = DEFAULT_SOURCES,
+  onSelect,
+  onSnippetClick,
+  className = '',
+}) {
   return (
     <div className={`${styles.content} ${className}`.trim()}>
       {sources.map((source) => (
@@ -120,12 +125,14 @@ export function SourcesContent({ sources = DEFAULT_SOURCES, onSelect, className 
 
           <div className={styles.snippets}>
             {source.snippets.map((snippet, index) => (
-              <div
+              <button
                 key={`${source.id}-snippet-${index}`}
+                type="button"
                 className={index % 2 === 0 ? styles.rowOdd : styles.rowEven}
+                onClick={() => onSnippetClick?.(source, snippet, index)}
               >
                 <SnippetText parts={snippet.parts} />
-              </div>
+              </button>
             ))}
           </div>
 

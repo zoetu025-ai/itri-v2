@@ -112,6 +112,7 @@ export declare const AnswerContent: ComponentType<{
 export declare const SourcesContent: ComponentType<{
   sources?: unknown[];
   onSelect?: (source: unknown) => void;
+  onSnippetClick?: (source: unknown, snippet: unknown, index: number) => void;
   className?: string;
 }>;
 
@@ -126,12 +127,17 @@ export declare const FilePreviewPanel: ComponentType<{
   title?: string;
   date?: string;
   content?: string;
+  snippets?: unknown[];
+  page?: number;
+  onPageChange?: (page: number) => void;
+  activeSnippetIndex?: number;
+  onSnippetSelect?: (index: number, snippet: unknown) => void;
   onLink?: () => void;
   onDownload?: () => void;
   onInfo?: () => void;
   onExpand?: () => void;
   onClose?: () => void;
-  variant?: "panel" | "full";
+  variant?: "panel" | "full" | "source";
   className?: string;
 }>;
 

@@ -15,7 +15,7 @@ export { ResponseActions } from './ResponseActions/ResponseActions.jsx';
 export { AnswerContent } from './AnswerContent/AnswerContent.jsx';
 export { SourcesContent } from './SourcesContent/SourcesContent.jsx';
 export { FileDetailPanel, buildFileDetailFields } from './FileDetailPanel/FileDetailPanel.jsx';
-export { FilePreviewPanel } from './FilePreviewPanel/FilePreviewPanel.jsx';
+export { FilePreviewPanel, DEFAULT_SOURCE_SNIPPETS } from './FilePreviewPanel/FilePreviewPanel.jsx';
 export { AssistantSteps } from './AssistantSteps/AssistantSteps.jsx';
 export { JsonPanel } from './JsonPanel/JsonPanel.jsx';
 export { NewChatConfirmDialog } from './NewChatConfirmDialog/NewChatConfirmDialog.jsx';
