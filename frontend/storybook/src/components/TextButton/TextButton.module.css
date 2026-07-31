@@ -1,0 +1,24 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-6);
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-space-30);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.button:hover {
+  color: var(--color-space-50);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--color-space-50);
+  outline-offset: 2px;
+}

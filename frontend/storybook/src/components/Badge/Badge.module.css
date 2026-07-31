@@ -1,0 +1,41 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  padding: 4px 12px;
+  border: none;
+  border-radius: 30px;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-sm);
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.neutral {
+  height: 27px;
+  background: var(--color-coldgray-10);
+  color: var(--color-coldgray-60);
+}
+
+.action {
+  height: 28px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary-50);
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.neutral.clickable:hover {
+  background: var(--color-action-surface);
+  color: var(--color-space-50);
+}
+
+.action.clickable:hover {
+  filter: brightness(0.97);
+}
+
+.label {
+  line-height: 1;
+}

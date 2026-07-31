@@ -1,0 +1,131 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+  width: 100%;
+}
+
+.source {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-16);
+  width: 100%;
+}
+
+.title {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+  color: var(--color-space-50);
+  font-size: var(--font-size-headline);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.index {
+  margin-right: 4px;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-16);
+  flex-shrink: 0;
+}
+
+.date {
+  color: var(--color-space-30);
+  font-size: var(--font-size-body-sm);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.iconBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: 99px;
+  background: rgba(171, 196, 218, 0.5);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.iconBtn:hover {
+  background: rgba(171, 196, 218, 0.75);
+}
+
+.path {
+  margin: 0;
+  color: var(--color-space-50);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  word-break: break-word;
+}
+
+.snippets {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.rowOdd,
+.rowEven {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 40px;
+  padding: 10px 12px;
+  overflow: hidden;
+}
+
+.rowOdd {
+  background: var(--color-coldgray-10);
+}
+
+.rowEven {
+  background: var(--color-surface-primary);
+}
+
+.snippetText {
+  margin: 0;
+  width: 100%;
+  color: var(--color-space-95);
+  font-size: var(--font-size-body-sm);
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.highlight {
+  color: var(--color-highlight);
+  font-weight: 700;
+}
+
+.divider {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 24px;
+  margin: 0;
+  border: none;
+  background: linear-gradient(
+    var(--color-coldgray-20),
+    var(--color-coldgray-20)
+  )
+    center / 100% 1px no-repeat;
+}

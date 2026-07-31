@@ -57,3 +57,13 @@ yarn-error.log*
 
 *.pem
 .tmp
+
+############################
+# Build / deploy artifacts
+############################
+
+frontend/product/out/
+frontend/product/out.zip
+*.zip
+.next/
+node_modules/

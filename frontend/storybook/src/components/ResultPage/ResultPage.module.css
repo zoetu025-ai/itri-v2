@@ -1,0 +1,208 @@
+.page {
+  --stage-width: 946px;
+  --stage-half: 473px;
+  --history-width: 328px;
+  --side-width: 439px;
+  --rail-gap: 24px;
+  --rail-top: 134px;
+  --top-bar-height: 100px;
+  --footer-dock-padding-top: 56px;
+  --footer-dock-padding-bottom: 32px;
+  --search-bar-compact-height: 74px;
+  /* Main column clearance above the full footer dock */
+  --footer-reserve: calc(
+    var(--footer-dock-padding-top) + var(--search-bar-compact-height) +
+      var(--footer-dock-padding-bottom)
+  );
+
+  position: relative;
+  min-height: 100vh;
+  background: var(--color-coldgray-10);
+  color: var(--color-space-50);
+  font-family: var(--font-family-base);
+  overflow-x: hidden;
+}
+
+.background {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.backgroundImage {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 140%;
+  max-width: none;
+  height: auto;
+  min-height: 70vh;
+  transform: translateX(-50%);
+  object-fit: cover;
+  object-position: center bottom;
+  filter: blur(10px);
+  opacity: 0.3;
+}
+
+.backgroundGradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(246, 247, 249, 0.95) 0%,
+    rgba(246, 247, 249, 0.7) 30%,
+    rgba(246, 247, 249, 0.15) 60%,
+    rgba(246, 247, 249, 0) 85%
+  );
+}
+
+.topBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 40px 80px 0 100px;
+  pointer-events: none;
+}
+
+.topBarSpacer {
+  height: var(--top-bar-height);
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.logo {
+  width: 60px;
+  height: 60px;
+  pointer-events: auto;
+}
+
+.clearChat {
+  margin-top: 34px;
+  pointer-events: auto;
+}
+
+.layout {
+  position: relative;
+  z-index: 1;
+  width: min(var(--stage-width), calc(100% - 48px));
+  margin: 0 auto;
+  /* Keep last card fully above the fixed search bar dock */
+  padding: 24px 0 calc(var(--footer-reserve) + 24px);
+}
+
+.historyColumn {
+  position: fixed;
+  top: var(--rail-top);
+  left: max(
+    16px,
+    calc(50% - var(--stage-half) - var(--rail-gap) - var(--history-width))
+  );
+  z-index: 2;
+  width: var(--history-width);
+  max-height: calc(100vh - 180px);
+  overflow-y: auto;
+}
+
+.history {
+  margin-top: 0;
+}
+
+.mainColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  min-width: 0;
+}
+
+.sideColumn {
+  position: fixed;
+  top: var(--rail-top);
+  left: calc(50% + var(--stage-half) + var(--rail-gap));
+  /* Above footerDock so the panel bottom stays visible while flush with SearchBar */
+  z-index: 4;
+  width: var(--side-width);
+}
+
+.sideColumnStretch {
+  top: var(--rail-top);
+  /* Align panel bottom with SearchBar bottom (footerDock padding-bottom) */
+  bottom: var(--footer-dock-padding-bottom);
+  height: auto;
+  overflow: hidden;
+}
+
+.footerDock {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  padding: 56px 24px 32px;
+  background: linear-gradient(
+    180deg,
+    rgba(246, 247, 249, 0) 0%,
+    rgba(246, 247, 249, 0.85) 36%,
+    var(--color-coldgray-10) 68%
+  );
+  pointer-events: none;
+}
+
+.footerSearch {
+  width: min(var(--stage-width), 100%);
+  pointer-events: auto;
+}
+
+.searchBar {
+  width: 100%;
+  max-width: none;
+}
+
+@media (max-width: 1400px) {
+  .page {
+    --history-width: 240px;
+  }
+
+  .sideColumn,
+  .sideColumnStretch {
+    position: static;
+    top: auto;
+    left: auto;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    margin-top: 24px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .historyColumn {
+    position: static;
+    width: 100%;
+    max-height: none;
+    margin-bottom: 24px;
+  }
+
+  .layout {
+    width: min(var(--stage-width), calc(100% - 32px));
+    padding-top: 16px;
+  }
+
+  .page {
+    --top-bar-height: 84px;
+  }
+
+  .topBar {
+    padding: 24px 16px 0;
+  }
+}

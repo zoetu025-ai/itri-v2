@@ -1,0 +1,118 @@
+.card {
+  width: 100%;
+  max-width: var(--search-bar-width);
+  padding: var(--spacing-17);
+  border: 1px solid var(--color-coldgray-20);
+  border-radius: var(--radius-card);
+  background: var(--color-surface-primary);
+}
+
+.textAreaWrap {
+  min-height: 120px;
+}
+
+.textArea {
+  width: 100%;
+  min-height: 120px;
+  border: none;
+  resize: none;
+  background: transparent;
+  color: var(--color-space-50);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+}
+
+.textArea::placeholder {
+  color: var(--color-space-20);
+}
+
+.textArea:focus {
+  outline: none;
+}
+
+.toolbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--spacing-16);
+  padding-top: var(--spacing-12);
+  border-top: 1px solid var(--color-coldgray-20);
+}
+
+.toolbarStart,
+.toolbarEnd {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+}
+
+.toolbarEnd {
+  gap: var(--spacing-16);
+}
+
+.voiceButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--icon-size-md);
+  height: var(--icon-size-md);
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.voiceButton:focus-visible {
+  outline: 2px solid var(--color-space-50);
+  outline-offset: 2px;
+}
+
+.compact {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-16);
+  width: 100%;
+  max-width: var(--result-card-width);
+  padding: var(--spacing-17);
+  border: 1px solid var(--color-coldgray-20);
+  border-radius: var(--radius-card);
+  background: var(--color-surface-primary);
+  box-shadow: var(--shadow-input);
+}
+
+.compactInput {
+  flex: 1;
+  min-width: 0;
+  height: 20px;
+  border: none;
+  background: transparent;
+  color: var(--color-space-50);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+}
+
+.compactInput::placeholder {
+  color: var(--color-space-20);
+}
+
+.compactInput:focus {
+  outline: none;
+}
+
+@media (max-width: 900px) {
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .toolbarStart,
+  .toolbarEnd {
+    justify-content: space-between;
+  }
+
+  .toolbarStart {
+    flex-wrap: wrap;
+  }
+}

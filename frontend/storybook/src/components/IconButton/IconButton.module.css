@@ -1,0 +1,22 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--icon-button-size);
+  height: var(--icon-button-size);
+  padding: 3px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--color-action-surface);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.button:hover {
+  background: rgba(171, 196, 218, 0.45);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--color-space-50);
+  outline-offset: 2px;
+}

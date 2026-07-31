@@ -1,0 +1,33 @@
+.selector {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  min-width: 264px;
+  height: var(--icon-button-size);
+  padding: 3px 12px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--color-action-surface);
+  color: var(--color-space-20);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.label {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+  word-break: break-word;
+}
+
+.selector:hover {
+  background: rgba(171, 196, 218, 0.45);
+}
+
+.selector:focus-visible {
+  outline: 2px solid var(--color-space-50);
+  outline-offset: 2px;
+}

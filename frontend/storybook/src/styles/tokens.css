@@ -1,3 +1,68 @@
-/* Shared design tokens (Reference → System → Component). Add variables as the design system grows. */
 :root {
+  /* Main / Gray */
+  --color-gray-30: #d9d9d9;
+
+  /* Main / Coldgray */
+  --color-coldgray-10: #f6f7f9;
+  --color-coldgray-20: #e4e6ea;
+  --color-coldgray-50: #99a7bb;
+  --color-coldgray-60: #788597;
+
+  /* Sub / Space */
+  --color-space-10: #abc4da;
+  --color-space-20: #88a6c1;
+  --color-space-30: #6689a9;
+  --color-space-50: #204e78;
+
+  /* Main / Primary */
+  --color-primary-50: #0d63ba;
+
+  /* Highlight */
+  --color-highlight: #005de9;
+  --color-space-95: #03080c;
+
+  /* Surfaces */
+  --color-surface-primary: #ffffff;
+  --color-action-surface: rgba(171, 196, 218, 0.3);
+  --color-primary-soft: rgba(195, 217, 240, 0.6);
+
+  /* Typography */
+  --font-family-base: "Open Sans", Arial, Helvetica, sans-serif;
+  --font-family-mono: "SF Mono", "Menlo", "Monaco", "Consolas", monospace;
+  --font-size-body: 16px;
+  --font-size-body-sm: 14px;
+  --font-size-body-lg: 18px;
+  --font-size-h4: 25px;
+  --font-size-headline: 20px;
+  --font-size-heading: 39px;
+  --line-height-body: 1.25;
+  --line-height-heading: 1;
+
+  /* Spacing */
+  --spacing-2: 2px;
+  --spacing-4: 4px;
+  --spacing-6: 6px;
+  --spacing-8: 8px;
+  --spacing-10: 10px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-17: 17px;
+  --spacing-24: 24px;
+
+  /* Radius */
+  --radius-xs: 6px;
+  --radius-sm: 5px;
+  --radius-card: 16px;
+  --radius-pill: 999px;
+
+  /* Layout */
+  --search-bar-width: 820px;
+  --result-card-width: 946px;
+  --icon-button-size: 38px;
+  --icon-size-md: 20px;
+  --icon-size-sm: 14px;
+
+  /* Elevation */
+  --shadow-card: 0 2px 4px rgba(34, 53, 74, 0.06), 0 16px 32px -8px rgba(34, 53, 74, 0.12);
+  --shadow-input: 0 0 15px rgba(34, 53, 74, 0.25);
 }

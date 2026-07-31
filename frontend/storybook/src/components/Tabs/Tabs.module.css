@@ -1,0 +1,33 @@
+.tabs {
+  display: flex;
+  width: 100%;
+  border-bottom: 3px solid var(--color-space-10);
+}
+
+.tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border: none;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -3px;
+  background: transparent;
+  color: var(--color-space-20);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body);
+  font-weight: 600;
+  line-height: 19.2px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.tab:hover {
+  color: var(--color-space-50);
+}
+
+.active {
+  color: var(--color-space-50);
+  border-bottom-color: var(--color-space-50);
+}

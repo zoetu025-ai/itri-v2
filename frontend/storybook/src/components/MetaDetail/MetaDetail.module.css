@@ -1,0 +1,13 @@
+.detail {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  color: var(--color-space-30);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-sm);
+  white-space: nowrap;
+}
+
+.text {
+  line-height: 1;
+}
