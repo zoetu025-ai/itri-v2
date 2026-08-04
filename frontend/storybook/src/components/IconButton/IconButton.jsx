@@ -8,6 +8,7 @@ export function IconButton({
   onClick,
   className = '',
   type = 'button',
+  ...rest
 }) {
   return (
     <button
@@ -15,6 +16,7 @@ export function IconButton({
       className={`${styles.button} ${className}`.trim()}
       onClick={onClick}
       aria-label={label}
+      {...rest}
     >
       <Icon name={icon} size={iconSize} alt="" />
     </button>

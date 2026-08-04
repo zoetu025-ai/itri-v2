@@ -28,15 +28,27 @@ export declare const SearchBar: ComponentType<{
   value?: string;
   onChange?: (event: unknown) => void;
   onAdd?: () => void;
+  onFilter?: () => void;
+  onUpload?: () => void;
+  onFiltersChange?: (filters: {
+    fileDate: string;
+    fileTypes: string[];
+    folder: string;
+  }) => void;
   onAssistantClick?: () => void;
+  onAssistantChange?: (option: { id: string; label: string }) => void;
   onVoice?: () => void;
   onSubmit?: (event?: unknown) => void;
   onSuggestionSelect?: (text: string) => void;
+  onExtensionsChange?: (ids: string[]) => void;
   assistantLabel?: string;
   suggestions?: Array<
     | { type: "item"; text: string }
     | { type: "section"; label: string }
   >;
+  extensions?: Array<{ id: string; label: string }>;
+  selectedExtensions?: string[];
+  defaultSelectedExtensions?: string[];
   className?: string;
 }>;
 
@@ -98,6 +110,25 @@ export declare const NewChatConfirmDialog: ComponentType<{
   description?: string;
   onStart?: () => void;
   onCancel?: () => void;
+  className?: string;
+}>;
+
+export declare const SearchFilterDialog: ComponentType<{
+  open?: boolean;
+  value?: {
+    fileDate?: string;
+    fileTypes?: string[];
+    folder?: string;
+  };
+  fileTypes?: Array<{ id: string; label: string }>;
+  fileDateOptions?: Array<{ value: string; label: string }>;
+  folderOptions?: Array<{ value: string; label: string }>;
+  onConfirm?: (filters: {
+    fileDate: string;
+    fileTypes: string[];
+    folder: string;
+  }) => void;
+  onClose?: () => void;
   className?: string;
 }>;
 
@@ -196,6 +227,9 @@ export declare const ResponseActions: ComponentType<{
 
 export declare const AssistantSelector: ComponentType<{
   label?: string;
+  value?: string;
+  options?: Array<{ id: string; label: string }>;
   onClick?: () => void;
+  onChange?: (option: { id: string; label: string }) => void;
   className?: string;
 }>;

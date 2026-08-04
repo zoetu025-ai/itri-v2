@@ -71,7 +71,8 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 40px 80px 0 100px;
+  /* Right edge aligns with FilePreview / side panel right edge */
+  padding: 40px max(24px, calc(50% - var(--stage-half) - var(--rail-gap) - var(--side-width))) 0 100px;
   pointer-events: none;
 }
 
@@ -125,7 +126,7 @@
 
 .sideColumn {
   position: fixed;
-  top: var(--rail-top);
+  top: var(--history-top);
   left: calc(50% + var(--stage-half) + var(--rail-gap));
   /* Above footerDock so the panel bottom stays visible while flush with SearchBar */
   z-index: 4;
@@ -133,7 +134,7 @@
 }
 
 .sideColumnStretch {
-  top: var(--rail-top);
+  top: var(--history-top);
   /* Align panel bottom with SearchBar bottom (footerDock padding-bottom) */
   bottom: var(--footer-dock-padding-bottom);
   height: auto;

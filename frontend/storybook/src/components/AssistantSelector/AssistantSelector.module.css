@@ -1,3 +1,8 @@
+.root {
+  position: relative;
+  flex-shrink: 0;
+}
+
 .selector {
   display: inline-flex;
   align-items: center;
@@ -13,7 +18,6 @@
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
   cursor: pointer;
-  flex-shrink: 0;
 }
 
 .label {
@@ -30,4 +34,48 @@
 .selector:focus-visible {
   outline: 2px solid var(--color-space-50);
   outline-offset: 2px;
+}
+
+.menu {
+  position: absolute;
+  left: 0;
+  top: calc(100% + var(--spacing-8));
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-width: 100%;
+  max-width: min(420px, 80vw);
+  padding: var(--spacing-6);
+  border-radius: 10px;
+  background: var(--color-surface-primary);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: var(--spacing-10) var(--spacing-12);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-space-50);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-sm);
+  font-weight: 400;
+  line-height: 1.25;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.menuItem:hover,
+.menuItemSelected {
+  background: rgba(171, 196, 218, 0.2);
+}
+
+.menuItem:focus-visible {
+  outline: 2px solid var(--color-space-50);
+  outline-offset: -2px;
 }

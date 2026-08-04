@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState } from 'react';
 import { AssistantSelector } from '../AssistantSelector/AssistantSelector.jsx';
 import { Icon } from '../Icon/Icon.jsx';
 import { IconButton } from '../IconButton/IconButton.jsx';
+import { SearchFilterDialog, DEFAULT_FILE_TYPES } from '../SearchFilterDialog/SearchFilterDialog.jsx';
 import styles from './SearchBar.module.css';
 
 export const DEFAULT_SUGGESTIONS = [
@@ -49,43 +50,83 @@ export const DEFAULT_SUGGESTIONS = [
   },
 ];
 
+export const DEFAULT_EXTENSIONS = [
+  { id: 'tavily', label: 'Tavily' },
+  { id: 'customer-intake', label: 'Customer intake' },
+  { id: 'maintenance', label: 'Maintenance' },
+  { id: 'dispatch-scheduling', label: 'Dispatch Scheduling' },
+];
+
 export function SearchBar({
   variant = 'default',
   placeholder = 'What would you like to search today?',
   value = '',
   onChange,
   onAdd,
+  onFilter,
+  onUpload,
+  onFiltersChange,
   onAssistantClick,
+  onAssistantChange,
   onVoice,
   onSubmit,
   onSuggestionSelect,
+  onExtensionsChange,
   assistantLabel,
   suggestions = DEFAULT_SUGGESTIONS,
+  extensions = DEFAULT_EXTENSIONS,
+  selectedExtensions: selectedExtensionsProp,
+  defaultSelectedExtensions = [],
   className = '',
 }) {
   const [suggestionsOpen, setSuggestionsOpen] = useState(false);
+  const [addMenuOpen, setAddMenuOpen] = useState(false);
+  const [extensionsOpen, setExtensionsOpen] = useState(false);
+  const [filterOpen, setFilterOpen] = useState(false);
+  const [filters, setFilters] = useState({
+    fileDate: '',
+    fileTypes: [],
+    folder: '',
+  });
   const [activeIndex, setActiveIndex] = useState(-1);
+  const [selectedExtensions, setSelectedExtensions] = useState(defaultSelectedExtensions);
+  const [attachments, setAttachments] = useState([]);
   const rootRef = useRef(null);
+  const fileInputRef = useRef(null);
   const listId = useId();
+  const addMenuId = useId();
+
+  const resolvedSelected =
+    selectedExtensionsProp !== undefined ? selectedExtensionsProp : selectedExtensions;
 
   const itemEntries = suggestions
     .map((entry, index) => ({ entry, index }))
     .filter(({ entry }) => entry.type === 'item');
 
+  const closeMenus = () => {
+    setAddMenuOpen(false);
+    setExtensionsOpen(false);
+  };
+
+  const closeSuggestions = () => {
+    setSuggestionsOpen(false);
+    setActiveIndex(-1);
+  };
+
   useEffect(() => {
-    if (!suggestionsOpen) return undefined;
+    if (!suggestionsOpen && !addMenuOpen) return undefined;
 
     const handlePointerDown = (event) => {
       if (!rootRef.current?.contains(event.target)) {
-        setSuggestionsOpen(false);
-        setActiveIndex(-1);
+        closeSuggestions();
+        closeMenus();
       }
     };
 
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') {
-        setSuggestionsOpen(false);
-        setActiveIndex(-1);
+        closeSuggestions();
+        closeMenus();
       }
     };
 
@@ -95,22 +136,252 @@ export function SearchBar({
       document.removeEventListener('mousedown', handlePointerDown);
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [suggestionsOpen]);
+  }, [suggestionsOpen, addMenuOpen]);
 
   const applySuggestion = (text) => {
     onChange?.({ target: { value: text } });
     onSuggestionSelect?.(text);
-    setSuggestionsOpen(false);
-    setActiveIndex(-1);
+    closeSuggestions();
   };
+
+  const toggleAddMenu = () => {
+    setAddMenuOpen((open) => {
+      const next = !open;
+      if (next) {
+        closeSuggestions();
+        onAdd?.();
+      } else {
+        setExtensionsOpen(false);
+      }
+      return next;
+    });
+  };
+
+  const updateExtensions = (next) => {
+    if (selectedExtensionsProp === undefined) {
+      setSelectedExtensions(next);
+    }
+    onExtensionsChange?.(next);
+  };
+
+  const toggleExtension = (id) => {
+    const next = resolvedSelected.includes(id)
+      ? resolvedSelected.filter((item) => item !== id)
+      : [...resolvedSelected, id];
+    updateExtensions(next);
+  };
+
+  const removeExtension = (id) => {
+    updateExtensions(resolvedSelected.filter((item) => item !== id));
+  };
+
+  const removeAttachment = (id) => {
+    setAttachments((current) => current.filter((item) => item.id !== id));
+  };
+
+  const updateFilters = (next) => {
+    setFilters(next);
+    onFiltersChange?.(next);
+  };
+
+  const removeFileTypeFilter = (id) => {
+    updateFilters({
+      ...filters,
+      fileTypes: filters.fileTypes.filter((item) => item !== id),
+    });
+  };
+
+  const handleFilter = () => {
+    onFilter?.();
+    closeMenus();
+    setFilterOpen(true);
+  };
+
+  const handleUpload = () => {
+    onUpload?.();
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const label = file.name.split('.').pop()?.toUpperCase() || 'FILE';
+      setAttachments((current) => [
+        ...current,
+        { id: `${file.name}-${Date.now()}`, label },
+      ]);
+    }
+    event.target.value = '';
+    closeMenus();
+  };
+
+  const selectedExtensionChips = extensions.filter((ext) =>
+    resolvedSelected.includes(ext.id),
+  );
+
+  const selectedFileTypeChips = DEFAULT_FILE_TYPES.filter((type) =>
+    filters.fileTypes.includes(type.id),
+  );
+
+  const chips = [
+    ...selectedExtensionChips.map((ext) => ({
+      id: `ext-${ext.id}`,
+      label: ext.label,
+      variant: 'filled',
+      onRemove: () => removeExtension(ext.id),
+    })),
+    ...selectedFileTypeChips.map((type) => ({
+      id: `filetype-${type.id}`,
+      label: type.chipLabel,
+      variant: 'outline',
+      onRemove: () => removeFileTypeFilter(type.id),
+    })),
+    ...attachments.map((file) => ({
+      id: `file-${file.id}`,
+      label: file.label,
+      variant: 'outline',
+      onRemove: () => removeAttachment(file.id),
+    })),
+  ];
+
+  const addMenu = addMenuOpen ? (
+    <div className={styles.addMenuWrap}>
+      <div
+        className={styles.addMenu}
+        id={addMenuId}
+        role="menu"
+        aria-label="Add attachment options"
+      >
+        <button
+          type="button"
+          role="menuitem"
+          className={styles.addMenuItem}
+          onMouseEnter={() => setExtensionsOpen(false)}
+          onClick={handleFilter}
+        >
+          <Icon name="filter" size="md" alt="" />
+          <span>Filter</span>
+        </button>
+        <button
+          type="button"
+          role="menuitem"
+          className={styles.addMenuItem}
+          onMouseEnter={() => setExtensionsOpen(false)}
+          onClick={handleUpload}
+        >
+          <Icon name="upload" size="md" alt="" />
+          <span>Upload attachment</span>
+        </button>
+        <button
+          type="button"
+          role="menuitem"
+          className={`${styles.addMenuItem} ${extensionsOpen ? styles.addMenuItemActive : ''}`.trim()}
+          aria-haspopup="menu"
+          aria-expanded={extensionsOpen}
+          onMouseEnter={() => setExtensionsOpen(true)}
+          onFocus={() => setExtensionsOpen(true)}
+          onClick={() => setExtensionsOpen((open) => !open)}
+        >
+          <Icon name="business-center" size="md" alt="" />
+          <span className={styles.addMenuItemLabel}>Extensions</span>
+          <Icon name="chevron-right" size="sm" alt="" />
+        </button>
+      </div>
+
+      {extensionsOpen ? (
+        <div
+          className={styles.extensionsMenu}
+          role="menu"
+          aria-label="Extensions"
+          onMouseEnter={() => setExtensionsOpen(true)}
+        >
+          {extensions.map((ext) => {
+            const checked = resolvedSelected.includes(ext.id);
+            return (
+              <button
+                key={ext.id}
+                type="button"
+                role="menuitemcheckbox"
+                aria-checked={checked}
+                className={styles.addMenuItem}
+                onClick={() => toggleExtension(ext.id)}
+              >
+                <span
+                  className={`${styles.checkbox} ${checked ? styles.checkboxChecked : ''}`.trim()}
+                  aria-hidden="true"
+                >
+                  {checked ? <span className={styles.checkboxMark} /> : null}
+                </span>
+                <span>{ext.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      ) : null}
+    </div>
+  ) : null;
+
+  const chipRow =
+    chips.length > 0 ? (
+      <div className={styles.chips} aria-label="Selected filters and attachments">
+        {chips.map((chip) => (
+          <span
+            key={chip.id}
+            className={`${styles.chip} ${chip.variant === 'outline' ? styles.chipOutline : styles.chipFilled}`.trim()}
+          >
+            <span className={styles.chipLabel}>{chip.label}</span>
+            <button
+              type="button"
+              className={styles.chipRemove}
+              aria-label={`Remove ${chip.label}`}
+              onClick={chip.onRemove}
+            >
+              <Icon name="cancel-steel" size="sm" alt="" />
+            </button>
+          </span>
+        ))}
+      </div>
+    ) : null;
+
+  const fileInput = (
+    <input
+      ref={fileInputRef}
+      type="file"
+      className={styles.hiddenFileInput}
+      tabIndex={-1}
+      aria-hidden="true"
+      onChange={handleFileChange}
+    />
+  );
+
+  const filterDialog = (
+    <SearchFilterDialog
+      open={filterOpen}
+      value={filters}
+      onConfirm={(next) => {
+        updateFilters(next);
+      }}
+      onClose={() => setFilterOpen(false)}
+    />
+  );
 
   if (variant === 'compact') {
     return (
       <section
+        ref={rootRef}
         className={`${styles.compact} ${className}`.trim()}
         aria-label="Search"
       >
-        <IconButton icon="add" label="Add attachment" onClick={onAdd} />
+        <div className={styles.addAnchor}>
+          <IconButton
+            icon="add"
+            label="Add attachment"
+            onClick={toggleAddMenu}
+            aria-expanded={addMenuOpen}
+            aria-controls={addMenuOpen ? addMenuId : undefined}
+          />
+          {addMenu}
+        </div>
         <input
           className={styles.compactInput}
           placeholder={placeholder || 'Enter your question'}
@@ -132,6 +403,8 @@ export function SearchBar({
           <Icon name="microphone" size="md" alt="" />
         </button>
         <IconButton icon="arrow-right" label="Submit search" onClick={onSubmit} />
+        {fileInput}
+        {filterDialog}
       </section>
     );
   }
@@ -148,8 +421,14 @@ export function SearchBar({
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          onFocus={() => setSuggestionsOpen(true)}
-          onClick={() => setSuggestionsOpen(true)}
+          onFocus={() => {
+            closeMenus();
+            setSuggestionsOpen(true);
+          }}
+          onClick={() => {
+            closeMenus();
+            setSuggestionsOpen(true);
+          }}
           onKeyDown={(event) => {
             if (suggestionsOpen && itemEntries.length > 0) {
               if (event.key === 'ArrowDown') {
@@ -175,7 +454,7 @@ export function SearchBar({
 
             if (event.key === 'Enter' && !event.shiftKey) {
               event.preventDefault();
-              setSuggestionsOpen(false);
+              closeSuggestions();
               onSubmit?.(event);
             }
           }}
@@ -189,8 +468,21 @@ export function SearchBar({
 
       <div className={styles.toolbar}>
         <div className={styles.toolbarStart}>
-          <IconButton icon="add" label="Add attachment" onClick={onAdd} />
-          <AssistantSelector label={assistantLabel} onClick={onAssistantClick} />
+          <div className={styles.addAnchor}>
+            <IconButton
+              icon="add"
+              label="Add attachment"
+              onClick={toggleAddMenu}
+              aria-expanded={addMenuOpen}
+              aria-controls={addMenuOpen ? addMenuId : undefined}
+            />
+            {addMenu}
+          </div>
+          <AssistantSelector
+            label={assistantLabel}
+            onClick={onAssistantClick}
+            onChange={onAssistantChange}
+          />
         </div>
 
         <div className={styles.toolbarEnd}>
@@ -205,6 +497,8 @@ export function SearchBar({
           <IconButton icon="arrow-right" label="Submit search" onClick={onSubmit} />
         </div>
       </div>
+
+      {chipRow}
 
       {suggestionsOpen ? (
         <div className={styles.suggestions} id={listId} role="listbox" aria-label="Popular questions">
@@ -237,6 +531,9 @@ export function SearchBar({
           })}
         </div>
       ) : null}
+
+      {fileInput}
+      {filterDialog}
     </section>
   );
 }

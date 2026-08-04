@@ -1,8 +1,12 @@
 export { Button } from './Button/Button.jsx';
 export { Icon } from './Icon/Icon.jsx';
 export { IconButton } from './IconButton/IconButton.jsx';
-export { AssistantSelector } from './AssistantSelector/AssistantSelector.jsx';
-export { SearchBar, DEFAULT_SUGGESTIONS } from './SearchBar/SearchBar.jsx';
+export { AssistantSelector, DEFAULT_ASSISTANTS } from './AssistantSelector/AssistantSelector.jsx';
+export {
+  SearchBar,
+  DEFAULT_SUGGESTIONS,
+  DEFAULT_EXTENSIONS,
+} from './SearchBar/SearchBar.jsx';
 export { Logo } from './Logo/Logo.jsx';
 export { SearchPage } from './SearchPage/SearchPage.jsx';
 export { Badge } from './Badge/Badge.jsx';
@@ -19,5 +23,11 @@ export { FilePreviewPanel, DEFAULT_SOURCE_SNIPPETS } from './FilePreviewPanel/Fi
 export { AssistantSteps } from './AssistantSteps/AssistantSteps.jsx';
 export { JsonPanel } from './JsonPanel/JsonPanel.jsx';
 export { NewChatConfirmDialog } from './NewChatConfirmDialog/NewChatConfirmDialog.jsx';
+export {
+  SearchFilterDialog,
+  DEFAULT_FILE_TYPES,
+  DEFAULT_FILE_DATE_OPTIONS,
+  DEFAULT_FOLDER_OPTIONS,
+} from './SearchFilterDialog/SearchFilterDialog.jsx';
 export { ResultCard } from './ResultCard/ResultCard.jsx';
 export { ResultPage } from './ResultPage/ResultPage.jsx';

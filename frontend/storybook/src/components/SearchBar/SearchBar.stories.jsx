@@ -5,3 +5,9 @@ export default {
 };
 
 export const Default = {};
+
+export const WithQuery = {
+  args: {
+    value: 'Find WOs related to Elvin',
+  },
+};
