@@ -31,7 +31,12 @@ export declare const SearchBar: ComponentType<{
   onAssistantClick?: () => void;
   onVoice?: () => void;
   onSubmit?: (event?: unknown) => void;
+  onSuggestionSelect?: (text: string) => void;
   assistantLabel?: string;
+  suggestions?: Array<
+    | { type: "item"; text: string }
+    | { type: "section"; label: string }
+  >;
   className?: string;
 }>;
 

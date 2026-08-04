@@ -4,7 +4,8 @@
   background: var(--color-coldgray-10);
   color: var(--color-space-50);
   font-family: var(--font-family-base);
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .background {
@@ -77,6 +78,8 @@
 
 .searchBar {
   margin-top: 32px;
+  position: relative;
+  z-index: 2;
 }
 
 .footer {

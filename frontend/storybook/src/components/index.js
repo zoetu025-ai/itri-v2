@@ -2,7 +2,7 @@ export { Button } from './Button/Button.jsx';
 export { Icon } from './Icon/Icon.jsx';
 export { IconButton } from './IconButton/IconButton.jsx';
 export { AssistantSelector } from './AssistantSelector/AssistantSelector.jsx';
-export { SearchBar } from './SearchBar/SearchBar.jsx';
+export { SearchBar, DEFAULT_SUGGESTIONS } from './SearchBar/SearchBar.jsx';
 export { Logo } from './Logo/Logo.jsx';
 export { SearchPage } from './SearchPage/SearchPage.jsx';
 export { Badge } from './Badge/Badge.jsx';

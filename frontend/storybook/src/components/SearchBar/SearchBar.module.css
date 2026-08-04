@@ -1,4 +1,5 @@
 .card {
+  position: relative;
   width: 100%;
   max-width: var(--search-bar-width);
   padding: var(--spacing-17);
@@ -68,6 +69,57 @@
   outline-offset: 2px;
 }
 
+.suggestions {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + var(--spacing-8));
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  max-height: min(420px, 50vh);
+  overflow: auto;
+  padding: var(--spacing-6);
+  border-radius: 10px;
+  background: var(--color-surface-primary);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.suggestionSection {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: var(--spacing-8) var(--spacing-12);
+  color: var(--color-space-10);
+  font-size: var(--font-size-body-sm);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.suggestionItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  width: 100%;
+  padding: var(--spacing-10) var(--spacing-12);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-space-50);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-body-sm);
+  font-weight: 400;
+  line-height: 1;
+  text-align: left;
+  cursor: pointer;
+}
+
+.suggestionItem:hover,
+.suggestionItemActive {
+  background: rgba(171, 196, 218, 0.2);
+}
+
 .compact {
   display: flex;
   align-items: center;
@@ -114,5 +166,9 @@
 
   .toolbarStart {
     flex-wrap: wrap;
+  }
+
+  .suggestions {
+    max-height: min(320px, 45vh);
   }
 }

@@ -4,8 +4,12 @@
   --history-width: 328px;
   --side-width: 439px;
   --rail-gap: 24px;
-  --rail-top: 134px;
-  --top-bar-height: 100px;
+  --rail-top: 40px;
+  --logo-top: 40px;
+  --logo-size: 60px;
+  --history-logo-gap: 32px;
+  --history-top: calc(var(--logo-top) + var(--logo-size) + var(--history-logo-gap));
+  --top-bar-height: 40px;
   --footer-dock-padding-top: 56px;
   --footer-dock-padding-bottom: 32px;
   --search-bar-compact-height: 74px;
@@ -94,19 +98,16 @@
   width: min(var(--stage-width), calc(100% - 48px));
   margin: 0 auto;
   /* Keep last card fully above the fixed search bar dock */
-  padding: 24px 0 calc(var(--footer-reserve) + 24px);
+  padding: 0 0 calc(var(--footer-reserve) + 24px);
 }
 
 .historyColumn {
   position: fixed;
-  top: var(--rail-top);
-  left: max(
-    16px,
-    calc(50% - var(--stage-half) - var(--rail-gap) - var(--history-width))
-  );
+  top: var(--history-top);
+  left: 100px;
   z-index: 2;
   width: var(--history-width);
-  max-height: calc(100vh - 180px);
+  max-height: calc(100vh - var(--history-top) - 48px);
   overflow-y: auto;
 }
 
@@ -195,11 +196,13 @@
 
   .layout {
     width: min(var(--stage-width), calc(100% - 32px));
-    padding-top: 16px;
+    padding-top: 0;
   }
 
   .page {
-    --top-bar-height: 84px;
+    --top-bar-height: 24px;
+    --logo-top: 24px;
+    --rail-top: 24px;
   }
 
   .topBar {
