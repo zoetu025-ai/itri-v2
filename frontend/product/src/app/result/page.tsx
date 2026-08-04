@@ -52,7 +52,6 @@ export default function ResultRoute() {
       onHistorySelect={setActiveHistoryId}
       onFollowUpSubmit={handleFollowUpSubmit}
       maxQuestions={MAX_QUESTIONS}
-      onLogoClick={goHome}
       onClearChat={goHome}
     />
   );

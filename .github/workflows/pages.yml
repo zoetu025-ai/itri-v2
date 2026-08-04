@@ -36,8 +36,8 @@ jobs:
         working-directory: frontend
         env:
           STATIC_EXPORT: "true"
-          BASE_PATH: /itri-v2
-          NEXT_PUBLIC_BASE_PATH: /itri-v2
+          BASE_PATH: /ITRI-user
+          NEXT_PUBLIC_BASE_PATH: /ITRI-user
         run: npm run build:netlify
 
       - name: Upload artifact
